@@ -1,5 +1,7 @@
 package dictionary
 
+import "fmt"
+
 type Entry struct {
 }
 
@@ -13,24 +15,33 @@ type Dictionary struct {
 }
 
 func New() *Dictionary {
-
-	return nil
+    dict := make(map[string]Entry)
+    return &Dictionary{entries: dict}
 }
 
-func (d *Dictionary) Add(word string, definition string) {
 
+func (d *Dictionary) Add(word string, definition string) {
+	entry := Entry{}
+	d.entries[word] = entry
 }
 
 func (d *Dictionary) Get(word string) (Entry, error) {
-
-	return Entry{}, nil
+    entry, found := d.entries[word]
+    if !found {
+        return Entry{}, fmt.Errorf("mot non trouvé dans le dictionnaire")
+    }
+    return entry, nil
 }
 
-func (d *Dictionary) Remove(word string) {
 
+func (d *Dictionary) Remove(word string) {
+	delete(d.entries, word)
 }
 
 func (d *Dictionary) List() ([]string, map[string]Entry) {
-
-	return []string{}, d.entries
+    words := make([]string, 0, len(d.entries))
+    for word := range d.entries {
+        words = append(words, word)
+    }
+    return words, d.entries
 }
