@@ -3,14 +3,38 @@
 	import (
 		"fmt"
 		"bufio"
-
+		"strings"
 		"estiam/dictionary"
-	)
+		)
 
 	func main() {
-		// bufio.NewReader(os.Stdin)
-		fmt.Println("Hello there")
+		dict := dictionary.New()
+	
+		dict.Add("opel", "corsa")
+		dict.Add("renault", "clio")
+	
+		// definitions
+		word := "opel"
+		entry, err := dict.Get(word)
+		if err != nil {
+			fmt.Printf("Error getting definition for '%s': %s\n", word, err)
+		} else {
+			fmt.Printf("Definition of '%s': %s\n", word, entry.String())
+		}
+	
+		// Supprimer un element
+		wordToRemove := "renault"
+		dict.Remove(wordToRemove)
+		fmt.Printf("'%s' has been removed from the dictionary.\n", wordToRemove)
+	
+		// List
+		words, entries := dict.List()
+		fmt.Println("Words in the dictionary:")
+		for _, word := range words {
+			fmt.Printf("%s: %s\n", word, entries[word].String())
+		}
 	}
+	
 
 	func actionAdd(d *dictionary.Dictionary, reader *bufio.Reader) {
 		fmt.Print("Mot : ")
