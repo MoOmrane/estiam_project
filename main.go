@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"your-module-name/dictionary" // Remplacez par votre nom de module réel
+	"dictionary/dictionary" 
 )
 
 func main() {
